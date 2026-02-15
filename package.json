@@ -1,0 +1,21 @@
+{
+  "name": "quickbotz-starter",
+  "version": "1.0.0",
+  "description": "An easy to use starter kit for building Discord bots with QuickBotz.",
+  "license": "ISC",
+  "author": "John Steel",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "nodemon src/index.ts"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "quickbotz": "^0.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
