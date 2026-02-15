@@ -1,27 +1,24 @@
-import { Events, GatewayIntentBits, SlashCommandBuilder } from "discord.js";
+import { Events, GatewayIntentBits } from "discord.js";
 import "dotenv/config";
+import path from "path";
 import { QuickBotz } from "quickbotz";
+import { loadCommands, loadEvents } from "./loaders";
 
 export const bot = QuickBotz.single({
   token: process.env.DISCORD_TOKEN!,
   clientId: process.env.CLIENT_ID!,
   guildId: process.env.GUILD_ID!,
-  intents: [
-    GatewayIntentBits.Guilds,
-  ],
+  intents: [GatewayIntentBits.Guilds],
 });
 
-bot.registerEvent(Events.ClientReady, false, async (ctx, client) => {
-  console.log(`Logged in as ${client.user.username}`);
-});
+async function main() {
+  try {
+    await loadCommands(bot, path.join(__dirname, "commands"));
+    await loadEvents(bot, path.join(__dirname, "events"));
+    await bot.start();
+  } catch (error) {
+    console.error("Error starting bot:", error);
+  }
+}
 
-bot.registerCommand({
-  data: new SlashCommandBuilder()
-    .setName("ping")
-    .setDescription("replies with pong!"),
-  execute: (ctx, interaction) => {
-    interaction.reply("pong!");
-  },
-});
-
-bot.start();
+main();

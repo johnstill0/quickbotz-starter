@@ -4,8 +4,7 @@
   "description": "An easy to use starter kit for building Discord bots with QuickBotz.",
   "license": "ISC",
   "author": "John Steel",
-  "type": "module",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts"
   },
