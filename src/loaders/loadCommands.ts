@@ -23,6 +23,7 @@ const loadCommands = async (bot: QuickBotz, commandsDir: string) => {
         bot.registerCommand({
           data: command.data,
           execute: command.execute,
+          autocomplete: command.autocomplete
         });
       }
     }
