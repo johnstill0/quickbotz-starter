@@ -1,10 +1,12 @@
 import { Client, Events } from "discord.js";
-import { Context } from "quickbotz";
+import { Context, Event } from "quickbotz";
 
-export default {
-  event: Events.ClientReady,
+const clientReady: Event<Events.ClientReady> = {
+  name: Events.ClientReady,
   once: true,
   execute: async (ctx: Context, client: Client<true>) => {
     console.log(`Logged in as ${client.user.username}`);
   },
 };
+
+export default clientReady;

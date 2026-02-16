@@ -15,12 +15,12 @@ const loadEvents = async (bot: QuickBotz, eventsDir: string) => {
       const eventModule = await import(fullPath);
       const event = eventModule.default || eventModule;
 
-      if (!event?.event || !event?.execute) {
+      if (!event?.name || !event?.execute) {
         console.warn(`Skipping invalid event file: ${file.name}`);
         continue;
       }
 
-      bot.registerEvent(event.event, event.once ?? false, event.execute);
+      bot.registerEvent({ name: event.name, execute: event.execute, once: event.once ?? false });
     }
   }
 };

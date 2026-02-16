@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import { Context } from "quickbotz";
+import { Context, Command } from "quickbotz";
 
-export default {
+const pingCommand: Command = {
   data: new SlashCommandBuilder()
     .setName("ping")
     .setDescription("Replies with pong!"),
@@ -9,3 +9,5 @@ export default {
     interaction.reply("Pong!");
   },
 };
+
+export default pingCommand;
