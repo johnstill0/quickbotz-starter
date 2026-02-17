@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "dotenv": "^17.3.1",
-    "quickbotz": "^0.0.7"
+    "quickbotz": "^0.0.8"
   },
   "devDependencies": {
     "nodemon": "^3.1.11",

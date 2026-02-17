@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { QuickBotz } from "quickbotz";
+import { Event, QuickBotz } from "quickbotz";
 
 const loadEvents = async (bot: QuickBotz, eventsDir: string) => {
   const files = await fs.promises.readdir(eventsDir, { withFileTypes: true });
@@ -13,7 +13,7 @@ const loadEvents = async (bot: QuickBotz, eventsDir: string) => {
       (file.name.endsWith(".ts") || file.name.endsWith(".js"))
     ) {
       const eventModule = await import(fullPath);
-      const event = eventModule.default || eventModule;
+      const event: Event<any> | undefined = eventModule.default || eventModule;
 
       if (!event?.name || !event?.execute) {
         console.warn(`Skipping invalid event file: ${file.name}`);

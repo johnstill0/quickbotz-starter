@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { QuickBotz } from "quickbotz";
+import { Command, QuickBotz } from "quickbotz";
 
 const loadCommands = async (bot: QuickBotz, commandsDir: string) => {
   const walk = async (dir: string) => {
@@ -13,7 +13,7 @@ const loadCommands = async (bot: QuickBotz, commandsDir: string) => {
         await walk(fullPath);
       } else if (file.isFile() && (file.name.endsWith(".ts") || file.name.endsWith(".js"))) {
         const commandModule = await import(fullPath);
-        const command = commandModule.default || commandModule;
+        const command: Command | undefined = commandModule.default || commandModule;
 
         if (!command?.data || !command?.execute) {
           console.warn(`Skipping invalid command file: ${fullPath}`);

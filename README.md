@@ -1,13 +1,11 @@
 # 🚀 QuickBotz Starter Kit
 
-A modern **Discord.js v14 + TypeScript** starter kit using 
+A modern **Discord.js v14 + TypeScript** starter kit using
 QuickBotz built for scalability, clean structure, and rapid development.
 
 ## 📦 Features
 
 - ⚡ Built on **discord.js v14**
-- 🧠 Automatic command loading (supports subdirectories)
-- 🎯 Automatic event loading (supports subdirectories)
 - 🗂 Organized modular architecture
 - 🔒 Environment-based configuration
 - 🛠 Designed for production-ready bots
@@ -46,6 +44,7 @@ GUILD_ID=your-guild-id
 ```bash
 npm run dev
 ```
+
 ---
 
 ## 🧩 Creating a Slash Command
@@ -53,29 +52,27 @@ npm run dev
 Create a file inside `src/commands/`
 
 ```ts
-import { SlashCommandBuilder, ChatInputCommandInteraction, AutocompleteInteraction } from "discord.js";
-import { Context } from "quickbotz";
+import {
+  SlashCommandBuilder,
+  ChatInputCommandInteraction,
+  AutocompleteInteraction,
+} from "discord.js";
+import { Context, Command } from "quickbotz";
 
-export default {
+const myCommand: Command = {
   data: new SlashCommandBuilder()
     .setName("mycommand")
     .setDescription("my nice command description"),
 
-  execute: async (ctx: Context, interaction:ChatInputCommandInteraction) => {
+  execute: async (ctx: Context, interaction: ChatInputCommandInteraction) => {
     //code
   },
-  autocomplete: async (ctx: Context, interaction:AutocompleteInteraction) => {
+  autocomplete: async (ctx: Context, interaction: AutocompleteInteraction) => {
     // if you need autocomplete
-  }
+  },
 };
-```
 
-Commands are automatically registered via the loader.
-
-Supports subfolders:
-
-```
-commands/admin/pingts.ts
+export default myCommand;
 ```
 
 ---
@@ -86,23 +83,39 @@ Create a file inside `src/events/`
 
 ```ts
 import { Client, Events } from "discord.js";
-import { Context } from "quickbotz";
+import { Context, Event } from "quickbotz";
 
-export default {
-  event: Events.ClientReady,
-  once: false,
-
-  execute: async (ctx:Context, client:Client<true>) => {
-    console.log(`Logged in as ${client.user.username}`);
-  }
+const clientReady: Event<Events.ClientReady> = {
+  name: Events.ClientReady,
+  once: true,
+  execute: async (ctx: Context, client: Client<true>) => {
+    //  do what you want when bot is ready
+  },
 };
+
+export default clientReady;
 ```
 
-Events are automatically registered using:
+---
+
+## 🎬 Creating an Action
+
+Create a file inside `src/actions/`
 
 ```ts
-bot.registerEvent(event, once, execute);
+import { Interaction, MessageFlags } from "discord.js";
+import { Action, Context } from "quickbotz";
+
+const actionName: Action = {
+  name: "actionName",
+  execute: async (ctx: Context, interaction: Interaction) => {
+    // here you can handle every interaction that has a custom id, it will automatically match it.
+  },
+};
+
+export default actionName;
 ```
+
 ## 🧪 Production Build (Optional)
 
 If you want to build for production:
@@ -122,6 +135,7 @@ npm run start
 - Clean architecture for scaling
 
 Perfect for:
+
 - Moderation bots
 - Utility bots
 - Dashboard-connected bots

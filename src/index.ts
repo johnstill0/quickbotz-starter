@@ -1,8 +1,8 @@
-import { Events, GatewayIntentBits } from "discord.js";
+import { GatewayIntentBits } from "discord.js";
 import "dotenv/config";
 import path from "path";
 import { QuickBotz } from "quickbotz";
-import { loadCommands, loadEvents } from "./loaders";
+import { loadActions, loadCommands, loadEvents } from "./loaders";
 
 export const bot = QuickBotz.single({
   token: process.env.DISCORD_TOKEN!,
@@ -15,6 +15,7 @@ async function main() {
   try {
     await loadCommands(bot, path.join(__dirname, "commands"));
     await loadEvents(bot, path.join(__dirname, "events"));
+    await loadActions(bot, path.join(__dirname, "actions"));
     await bot.start();
   } catch (error) {
     console.error("Error starting bot:", error);
